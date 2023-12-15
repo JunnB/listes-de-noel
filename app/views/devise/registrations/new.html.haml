@@ -1,0 +1,27 @@
+/ app/views/devise/registrations/new.html.haml
+.container.mt-5
+  .card
+    .card-header
+      /= image_tag('header_image.jpg', alt: 'Header Image')
+      %h2 Inscrivez-vous
+
+    .card-body
+      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form' }) do |f|
+        .form-group
+          = f.label :name, "Surnom", class: "font-weight-bold"
+          = f.text_field :name, class: "form-control"
+
+        .form-group
+          = f.label :email, "Adresse Email", class: "font-weight-bold"
+          = f.email_field :email, class: "form-control"
+
+        .form-group
+          = f.label :password, "Mot de Passe", class: "font-weight-bold"
+          = f.password_field :password, class: "form-control"
+
+        .form-group.mt-3
+          = f.submit "Inscription", class: "btn btn-primary"
+
+      .mt-3
+        Vous avez déjà un compte ?
+        = link_to 'Connectez-vous ici', new_user_session_path, class: 'new-registration-link'

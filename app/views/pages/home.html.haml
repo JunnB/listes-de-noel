@@ -1,0 +1,11 @@
+.container.my-5
+  .row.justify-content-center
+    .col-md-6
+      .card
+        .card-body
+          %h5.card-title Bienvenue sur notre site de gestion de liste de cadeaux !
+          %p.card-text Pour accéder à votre liste de cadeaux, veuillez vous inscrire ou vous connecter.
+          = link_to "S'inscrire", new_user_registration_path, class: 'btn btn-primary'
+          = link_to "Se connecter", new_user_session_path, class: 'btn btn-secondary'
+        .card-img-bottom
+          = image_tag "https://media.istockphoto.com/id/1357890877/fr/vectoriel/mignon-danse-p%C3%A8re-no%C3%ABl-illustration-vectorielle-de-no%C3%ABl.jpg?s=612x612&w=0&k=20&c=gbrfSs11XCQLzHbgVV-Vm9Nf-TlMjKu4G7BVPIAF4nU%3D", class: 'img-fluid'

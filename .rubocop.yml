@@ -1,0 +1,31 @@
+require:
+  - standard  
+
+inherit_gem:
+  standard: config/base.yml
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.1.2
+  Exclude:
+    - node_modules/**/*
+    - public/**/*
+    - vendor/**/*
+    - spec/**/*
+    - db/**/*
+
+Style/QuotedSymbols:
+  Enabled: false
+
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: space
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces:  no_space
+
+Style/NumericLiteralPrefix:
+  Enabled: false
+Style/RedundantReturn:
+  Enabled: false

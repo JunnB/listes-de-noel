@@ -1,0 +1,10 @@
+%h1 Ma liste de Noël
+.row
+  - @gifts.each do |gift|
+    .col-md-4
+      .card.mb-4
+        %img.card-img-top{src: gift.image_url, alt: gift.name}
+        .card-body
+          %h5.card-title= gift.name
+          %p.card-text= gift.description
+          = link_to 'Voir le cadeau', gift_path(gift), class: 'btn btn-primary'
