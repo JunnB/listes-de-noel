@@ -1,27 +1,30 @@
-/ app/views/devise/registrations/new.html.haml
-.container.mt-5
-  .card
-    .card-header
-      /= image_tag('header_image.jpg', alt: 'Header Image')
-      %h2 Inscrivez-vous
-
-    .card-body
-      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form' }) do |f|
-        .form-group
-          = f.label :name, "Surnom", class: "font-weight-bold"
-          = f.text_field :name, class: "form-control"
-
-        .form-group
-          = f.label :email, "Adresse Email", class: "font-weight-bold"
-          = f.email_field :email, class: "form-control"
-
-        .form-group
-          = f.label :password, "Mot de Passe", class: "font-weight-bold"
-          = f.password_field :password, class: "form-control"
-
-        .form-group.mt-3
-          = f.submit "Inscription", class: "btn btn-primary"
-
-      .mt-3
-        Vous avez déjà un compte ?
-        = link_to 'Connectez-vous ici', new_user_session_path, class: 'new-registration-link'
+%section.bg-gray-50.dark:bg-gray-900.h-screen
+  .py-8.px-4.mx-auto.max-w-screen-xl.lg:py-16.grid.lg:grid-cols-2.gap-8.lg:gap-16
+    .flex.flex-col.justify-center
+      %h1.mb-4.text-4xl.font-extrabold.tracking-tight.leading-none.text-gray-900.md:text-5xl.lg:text-6xl.dark:text-white Nous vous aidons à faire votre liste de Noël
+      %p.mb-6.text-lg.font-normal.text-gray-500.lg:text-xl.dark:text-gray-400 C'est le moment de faire votre liste de cadeaux de Noël. Vous pouvez ajouter autant de cadeaux que vous le souhaitez. Vous pouvez aussi ajouter des idées de cadeaux pour les autres membres de votre famille.
+    .mt-10
+      .w-full.lg:max-w-xl.p-6.space-y-8.sm:p-8.bg-white.rounded-lg.shadow-xl.dark:bg-gray-900
+        %h2.text-2xl.font-bold.text-gray-900.dark:text-white
+          S'inscrire à LesPetitsElfes
+        = form_for(resource, :as => resource_name, :url => registration_path(resource_name), html:{class: "mt-8.space-y-6", "data-turbo" => "false"}) do |f|
+          %div.mb-2
+            %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "name"} Surnom
+            = f.text_field :name, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "JuNN", required: "", type: "text"
+          %div.mb-2
+            %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "email"} Email
+            = f.email_field :email, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "name@company.com", required: "", type: "email"
+          %div.mb-2
+            %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "password"} Mot de passe
+            = f.password_field :password, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "••••••••", required: "", type: "password"
+          %div.mb-2{"data-controller": "avatar"} 
+            %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "user_avatar"} Avatar
+            = f.file_field :avatar, id: "user_avatar", "data-avatar-target": "input", "data-action": "change->avatar#preview", class: "rounded-full h-16 w-16 bg-red-800", style: "display: none;"
+            %label{for: "user_avatar", class: "cursor-pointer w-16 h-16 rounded-full overflow-hidden bg-gray-100"}
+              %img#avatar-preview.rounded-full.w-16.h-16{src: "https://cdn.vectorstock.com/i/preview-1x/29/09/avatar-m-vector-37332909.jpg", alt: "Avatar preview", "data-avatar-target": "output"}
+          .flex.items-start
+            %a.ms-auto.text-sm.font-medium.text-blue-600.hover:underline.dark:text-blue-500{:href => "#"} Mot de passe oublié ?
+          %button.btn-primary{:type => "submit"} S'inscrire
+          .text-sm.font-medium.text-gray-900.dark:text-white.mt-3
+            Déjà un compte encore de compte ?
+            %a.text-blue-600.hover:underline.dark:text-blue-500{href: new_user_session_path} Se connecter

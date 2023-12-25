@@ -1,0 +1,38 @@
+<section>
+  <h1 class="title mt-5 mb-5 pt-5"> Les listes de cadeaux </h1>
+  <ul class="w-full divide-y divide-gray-200 dark:divide-gray-700 dark:text-white mb-5">
+    <li class="pt-3 pb-3 sm:pb-4 px-3">
+          <div class="flex items-center space-x-4 rtl:space-x-reverse">
+            <div class="flex-shrink-0 "></div>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                  Nom de la liste
+                </p>
+            </div>
+            Personnes
+          </div>
+      </li>
+  <ul class="w-full divide-y divide-gray-200 dark:divide-gray-700">
+    <% @pools.each do |pool| %>
+      <li id="pool-<%=pool.id%>" class="px-3 pt-3 pb-3 sm:pb-4 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
+        <%= link_to pools_path(id: pool.id) do %>
+          <div class="flex items-center space-x-4 rtl:space-x-reverse">
+            <div class="flex-shrink-0">
+                <%= image_tag pool.avatar_url(:thumb), class:"w-8 h-8 rounded-full" %>                
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                  <%=pool.name%>
+                </p>
+            </div>
+            <div class="relative">
+              <% pool.users.limit(2).each_with_index do |user, index| %>
+                <%= image_tag user.avatar_url(:thumb), class:"w-8 h-8 rounded-full #{index == 0 ? '' : 'absolute'}", style: "#{index == 0 ? '' : 'top:0px; left: 20px'}" %>
+              <% end %>
+          </div>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</section>

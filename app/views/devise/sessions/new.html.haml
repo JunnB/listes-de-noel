@@ -1,18 +1,22 @@
-.container.mt-5
-  .row.justify-content-center
-    .col-md-6
-      .card
-        .card-header.bg-success.text-white
-          %h2 Connexion
-        .card-body
-          = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form" }) do |f|
-            .form-group
-              = f.label :email, "Adresse Email", class: "font-weight-bold"
-              = f.email_field :email, class: "form-control"
-
-            .form-group
-              = f.label :password, "Mot de Passe", class: "font-weight-bold"
-              = f.password_field :password, class: "form-control"
-
-            .form-group
-              = f.submit "Connexion", class: "btn btn-primary"
+%section.bg-gray-50.dark:bg-gray-900.h-screen
+  .py-8.px-4.mx-auto.max-w-screen-xl.lg:py-16.grid.lg:grid-cols-2.gap-8.lg:gap-16
+    .flex.flex-col.justify-center
+      %h1.mb-4.text-4xl.font-extrabold.tracking-tight.leading-none.text-gray-900.md:text-5xl.lg:text-6xl.dark:text-white Nous vous aidons à faire votre liste de Noël
+      %p.mb-6.text-lg.font-normal.text-gray-500.lg:text-xl.dark:text-gray-400 C'est le moment de faire votre liste de cadeaux de Noël. Vous pouvez ajouter autant de cadeaux que vous le souhaitez. Vous pouvez aussi ajouter des idées de cadeaux pour les autres membres de votre famille.
+    .mt-10
+      .w-full.lg:max-w-xl.p-6.space-y-8.sm:p-8.bg-white.rounded-lg.shadow-xl.dark:bg-gray-900
+        %h2.text-2xl.font-bold.text-gray-900.dark:text-white
+          Se connecter à LesPetitsElfes
+        = form_for(resource, :as => resource_name, :url => session_path(resource_name), html:{class: "mt-8.space-y-6", "data-turbo" => "false"}) do |f|
+          %div.mb-2
+            %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "email"} Email
+            = f.email_field :email, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "name@company.com", required: "", type: "email"
+          %div.mb-2
+            %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "password"} Mot de passe
+            = f.password_field :password, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "••••••••", required: "", type: "password"
+          .flex.items-start
+            %a.ms-auto.text-sm.font-medium.text-blue-600.hover:underline.dark:text-blue-500{:href => "#"} Mot de passe oublié ?
+          %button.btn-primary{:type => "submit"} Connexion
+          .text-sm.font-medium.text-gray-900.dark:text-white.mt-3
+            Pas encore de compte ?
+            %a.text-blue-600.hover:underline.dark:text-blue-500{href: new_user_registration_path} S'inscrire

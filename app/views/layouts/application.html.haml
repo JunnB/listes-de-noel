@@ -6,32 +6,18 @@
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     = csrf_meta_tags
     = csp_meta_tag
+    = stylesheet_link_tag "tailwind", "data-turbo-track": "reload"
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
-    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
-  %body
-    = render "layouts/header"
-    .container      
+    = javascript_importmap_tags
+  %body.dark:bg-gray-900
+    = render "shared/header"
+    = render 'shared/sidebar' if user_signed_in?
+    - if user_signed_in?
+      .menu-container
+        = yield
+    - else
       = yield
-      .btn-group
-        %button.btn.btn-danger.dropdown-toggle{ type: 'button', 'data-bs-toggle' => 'dropdown', 'aria-expanded' => 'false' }
-          Action
-        %ul.dropdown-menu
-          %li
-            %a.dropdown-item{ href: '#' } Action
-          %li
-            %a.dropdown-item{ href: '#' } Another action
-          %li
-            %a.dropdown-item{ href: '#' } Something else here
-          %li
-            %hr.dropdown-divider
-          %li
-            %a.dropdown-item{ href: '#' } Separated link
-      .toast-container.position-fixed.top-0.end-0.p-3
-        - flash.each do |type, message|
-          .toast.show{ class: "toast-#{type}"}
-            .toast-header
-              %img.bg-primary.rounded.me-2{ src: "https://via.placeholder.com/20", alt: "", loading: "lazy" }
-              
-              %strong.me-auto= type.capitalize
-              %button.ml-2.mb-1.btn-close{ type: 'button', 'data-bs-dismiss': 'toast', 'aria-label': 'Close' }
-            .toast-body= message
+    = render "shared/alerts"
+
+    
+      

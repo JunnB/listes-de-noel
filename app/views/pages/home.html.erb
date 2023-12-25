@@ -1,0 +1,35 @@
+<section name="hero">
+  <%
+    banner_infos = {
+      image_url: asset_url("home_hero.jpg"),
+      title: "Votre wishlist magique",
+      subtitle: "Une façon simple de suivre et partager vos cadeaux",
+
+    }
+    if user_signed_in?
+      banner_infos = banner_infos.merge({
+          btn_primary_title: "Accéder aux listes",
+          btn_primary_link: pools_path
+        }
+      )
+    else
+      banner_infos = banner_infos.merge({
+        btn_primary_title: "Commencer",
+        btn_primary_link: new_user_session_path,
+        btn_seconday_title: "S'inscrire",
+        btn_seconday_link: new_user_registration_path
+      })
+    end
+  %>
+  <%= render "shared/hero", banner_infos %>
+</section>
+
+<section class="container mx-auto px-4 mt-5" name="gift-examples">
+  <h2 class="text-4xl font-extrabold dark:text-white">
+    Idées cadeaux
+  </h2>
+  <div class="mt-5">
+    <%= render "shared/gallery" %>
+  </div>
+</section>
+</div>
