@@ -171,6 +171,7 @@ GEM
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
+    pg (1.5.4)
     public_suffix (5.0.3)
     puma (5.6.7)
       nio4r (~> 2.0)
@@ -309,6 +310,7 @@ DEPENDENCIES
   jbuilder
   mini_magick
   motor-admin (~> 0.4.23)
+  pg
   puma (~> 5.0)
   rails (~> 7.0.5)
   rails-i18n
