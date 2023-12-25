@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_24_161012) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_25_143846) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -261,18 +261,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_24_161012) do
     t.index ["name"], name: "motor_tags_name_unique_index", unique: true
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "gift_id"
-    t.string "title"
-    t.text "body"
-    t.boolean "read", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["gift_id"], name: "index_notifications_on_gift_id"
-    t.index ["user_id"], name: "index_notifications_on_user_id"
-  end
-
   create_table "offers", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "gift_id", null: false
@@ -324,8 +312,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_24_161012) do
   add_foreign_key "motor_note_tag_tags", "motor_note_tags", column: "tag_id"
   add_foreign_key "motor_note_tag_tags", "motor_notes", column: "note_id"
   add_foreign_key "motor_taggable_tags", "motor_tags", column: "tag_id"
-  add_foreign_key "notifications", "gifts"
-  add_foreign_key "notifications", "users"
   add_foreign_key "offers", "gifts"
   add_foreign_key "offers", "users"
   add_foreign_key "user_pools", "pools"
