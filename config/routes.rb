@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :gifts, only: [:index, :create, :update, :show]
   devise_for :users, controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations",
@@ -7,6 +6,12 @@ Rails.application.routes.draw do
     confirmations: "users/confirmations",
     unlocks: "users/unlocks"
   }
+
+  constraints lambda { |request| request.env["HTTP_AUTHORIZATION"].present? } do
+    mount Motor::Admin => "/motor_admin"
+  end
+
+  resources :gifts, only: [:index, :create, :update, :show]
   root "pages#home"
   resources :pools
 end
