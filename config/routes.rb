@@ -11,7 +11,10 @@ Rails.application.routes.draw do
     mount Motor::Admin => "/motor_admin"
   end
 
-  resources :gifts, only: [:index, :create, :update, :show]
+  resources :gifts, only: [:index, :new, :create, :update, :show]
   root "pages#home"
   resources :pools
+  resources :offers
+  post "/pools/:pool_id/users/:user_id", to: "pools#join", as: "join_pool"
+  delete "/pools/:pool_id/users/:user_id", to: "pools#unjoin", as: "unjoin_pool"
 end

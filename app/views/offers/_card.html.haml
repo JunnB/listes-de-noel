@@ -1,0 +1,18 @@
+- offer = offer.decorate
+.bg-white.shadow-md.rounded-lg.px-8.pt-6.pb-8.mb-8.flex.flex-col
+  - if current_user == offer.user
+    = link_to 'Supprimer', offer_path(offer), method: :delete, data: { confirm: 'Êtes-vous sûr ?' }, class: 'btn-secondary absolute top-0 right-0 mt-2 mr-2'
+  %h2.text-2xl.mb-4
+    = "Offre de #{offer.user.name}"
+  %p.mb-3
+    %strong Montant : 
+    = offer.price
+  %p.mb-3
+    %strong Status : 
+    = offer.formatted_status
+  %p.mb-3
+    %strong Acheteur : 
+    = offer.formatted_is_buyer
+  %p.mb-3
+    %strong Créé le : 
+    = @gift.created_at.strftime("%d/%m/%Y à %H:%M")

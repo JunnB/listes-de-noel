@@ -1,10 +1,48 @@
-%h1 Ma liste de Noël
-.row
-  - @gifts.each do |gift|
-    .col-md-4
-      .card.mb-4
-        %img.card-img-top{src: gift.image_url, alt: gift.name}
-        .card-body
-          %h5.card-title= gift.name
-          %p.card-text= gift.description
-          = link_to 'Voir le cadeau', gift_path(gift), class: 'btn btn-primary'
+
+%h1.text-4xl.font-bold.mb-4.dark:text-white Détails du cadeau
+.bg-white.shadow-md.rounded-lg.px-8.pt-6.pb-8.mb-8.flex.flex-col
+  %h2.text-2xl.mb-4
+    = @gift.name
+  %p.mb-3
+    %strong Description : 
+    = @gift.description
+  %p.mb-3
+    %strong Prix : 
+    = @gift.price
+  %p.mb-3
+    %strong Status : 
+    = @gift.status
+  .mb-3.flex.items-center
+    %p
+      %strong.mr-2 Proposé par : 
+      .mr-2
+        = @gift.proposer.decorate.avatar_tag
+    = @gift.proposer.name
+      
+  .mb-3.flex.items-center
+    %p
+      %strong.mr-2 Destiné à : 
+      .mr-2
+        = @gift.recipient.decorate.avatar_tag
+    = @gift.recipient.name
+
+  %p.mb-3
+    %strong Evenement : 
+    = @pool.name
+  %p.mb-3
+    %strong Créé le : 
+    = @gift.created_at.strftime("%d/%m/%Y à %H:%M")
+  %p.mb-3
+    %strong Mis à jour le : 
+    = @gift.updated_at.strftime("%d/%m/%Y à %H:%M")
+
+%h1.text-4xl.font-bold.mb-4.dark:text-white Les participations
+- @gift.offers.each do |offer|
+  = render "offers/card", offer: offer
+
+.mt-4.flex.items-center{"data-controller": "offer"}
+  - unless current_user.offers.exists?(gift_id: @gift.id)
+    = button_tag "Participer", class: "btn-primary mr-3","data-modal-target" => "offer-form-modal", "data-gift-id" => @gift.id, "data-gift-name": @gift.name, "data-gift-recipient-name": @gift.recipient.name, "data-action" => "click->offer#openModal"
+  = link_to "Retour".html_safe, pool_path(pool: @pool), class: "text-2xl btn-secondary"
+
+= render "offers/modal_form"

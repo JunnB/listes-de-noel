@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_25_143846) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_05_155558) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -48,24 +48,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_143846) do
     t.index ["user_id"], name: "index_buyers_on_user_id"
   end
 
-  create_table "gift_responsibles", force: :cascade do |t|
+  create_table "gift_buyers", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "gift_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["gift_id"], name: "index_gift_responsibles_on_gift_id"
-    t.index ["user_id"], name: "index_gift_responsibles_on_user_id"
+    t.index ["gift_id"], name: "index_gift_buyers_on_gift_id"
+    t.index ["user_id"], name: "index_gift_buyers_on_user_id"
   end
 
   create_table "gifts", force: :cascade do |t|
     t.string "description"
-    t.integer "user_id", null: false
+    t.integer "recipient_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
     t.decimal "price"
-    t.string "status"
-    t.index ["user_id"], name: "index_gifts_on_user_id"
+    t.string "status", default: "available"
+    t.integer "proposer_id", null: false
+    t.integer "pool_id", null: false
+    t.index ["pool_id"], name: "index_gifts_on_pool_id"
+    t.index ["proposer_id"], name: "index_gifts_on_proposer_id"
+    t.index ["recipient_id"], name: "index_gifts_on_recipient_id"
   end
 
   create_table "motor_alert_locks", force: :cascade do |t|
@@ -267,6 +271,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_143846) do
     t.decimal "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "comment"
+    t.string "status"
+    t.boolean "is_buyer"
     t.index ["gift_id"], name: "index_offers_on_gift_id"
     t.index ["user_id"], name: "index_offers_on_user_id"
   end
@@ -275,6 +282,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_143846) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.string "resource_type"
+    t.integer "resource_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
+    t.index ["name"], name: "index_roles_on_name"
+    t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
   end
 
   create_table "user_pools", force: :cascade do |t|
@@ -300,13 +318,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_143846) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "users_roles", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+    t.index ["role_id"], name: "index_users_roles_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+    t.index ["user_id"], name: "index_users_roles_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "buyers", "gifts"
   add_foreign_key "buyers", "users"
-  add_foreign_key "gift_responsibles", "gifts"
-  add_foreign_key "gift_responsibles", "users"
-  add_foreign_key "gifts", "users"
+  add_foreign_key "gift_buyers", "gifts"
+  add_foreign_key "gift_buyers", "users"
+  add_foreign_key "gifts", "pools"
+  add_foreign_key "gifts", "users", column: "proposer_id"
+  add_foreign_key "gifts", "users", column: "recipient_id"
   add_foreign_key "motor_alert_locks", "motor_alerts", column: "alert_id"
   add_foreign_key "motor_alerts", "motor_queries", column: "query_id"
   add_foreign_key "motor_note_tag_tags", "motor_note_tags", column: "tag_id"

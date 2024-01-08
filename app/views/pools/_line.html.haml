@@ -1,0 +1,23 @@
+= turbo_frame_tag "pool_#{pool.id}", class:" table-row odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" do
+  .table-cell.px-6.py-4.font-medium.text-gray-900.dark:text-white
+    .flex.items-center{:scope => "row"}
+      = image_tag pool.avatar_url(:thumb), class:"w-8 h-8 mr-2 rounded-full"
+      %p.text-sm.font-medium.text-gray-900.truncate.dark:text-white
+        = pool.name
+  .table-cell.py-4.relative
+    - pool_users = pool.users
+    - pool_users_count = pool.users.count
+    - pool_users.limit(2).each_with_index do |user, index|
+      = image_tag user.avatar_url(:thumb), class:"w-8 h-8 rounded-full #{index == 0 ? '' : 'absolute'}", style: "#{index == 0 ? '' : 'top:15px; left: 20px'}"
+    .w-8.h-8.bg-gray-400.flex.items-center.justify-center.rounded-full.text-white{ class: "#{pool_users_count == 0 ? '' : 'absolute'}",style: "#{pool_users_count == 0 ? '' : "top:15px; left: #{pool_users_count * 20}px"}" }
+      = pool_users_count
+  - button_attributes = pool_line_button_attributes(current_user, pool)
+  - if button_attributes[:has_pool]
+    .table-cell.px-6.py-4.relative
+      = button_to button_attributes[:btn_title], button_attributes[:btn_link], method: button_attributes[:btn_action], class: "link"
+    .table-cell.px-6.py-4.relative
+      = link_to "Voir", pool_path(pool), method: button_attributes[:btn_action], class: "link", data: { turbo_action: "replace",turbo_frame: "_top"}
+  - else
+    .table-cell.px-6.py-4
+    .table-cell.px-6.py-4
+      = button_to button_attributes[:btn_title], button_attributes[:btn_link], method: button_attributes[:btn_action], class: "link"

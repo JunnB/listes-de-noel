@@ -1,0 +1,36 @@
+%section.container
+  %h1.title.mt-3.mb-5.underline
+    = "Proposer un cadeau"
+  .title.mb-5
+    = "Evenement : #{@pool.name}"
+  = form_for @gift do |f|
+    = f.hidden_field :pool_id, value: @pool.id
+    .mb-5
+      = f.label :name, "Nom du cadeau", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      = f.text_field :name, class: "shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light", placeholder: "Un t-shirt blanc", required: true
+    .mb-5
+      = f.label :description, "Description", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      = f.text_area :description, rows:"4", class:"block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Ici je peux aussi mettre des liens", required: true
+    .mb-5
+      = f.label :user_id, "Pour qui ?", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      = f.collection_select :user_id, @pool.users, :id, :name, {selected: @pool.users.first.id, include_blank: false}, { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500", placeholder: "Choisir un utilisateur" }
+    .mb-5
+      = f.label :price, "Prix du cadeau", class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      .flex
+        %label.mb-2.text-sm.font-medium.text-gray-900.sr-only.dark:text-white{:for => "currency-input"} Your Email
+        .relative.w-full
+          .absolute.inset-y-0.start-0.top-0.flex.items-center.pointer-events-none{:class => "ps-3.5"}
+            %svg.w-4.h-4.text-gray-500.dark:text-gray-400{"aria-hidden" => "true", :fill => "none", :viewbox => "0 0 20 16", :xmlns => "http://www.w3.org/2000/svg"}
+              %path{:d => "M5 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1M2 5h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm8 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z", :stroke => "currentColor", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+          = f.number_field :price, step:"0.01", class: "p-2.5 block w-full z-20 ps-10 text-sm text-gray-900 bg-gray-50 rounded-s-lg border-e-gray-50 border-e-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-e-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+        .flex-shrink-0.z-10.inline-flex.items-center.px-4.text-sm.font-medium.text-center.text-gray-900.bg-gray-100.border.border-gray-300.rounded-e-lg.dark:bg-gray-700.dark:text-white.dark:border-gray-600{:class => "py-2.5"}
+          %svg.h-4.w-4.me-2{"aria-hidden" => "true", :fill => "none", :viewbox => "0 0 20 15"}
+            %rect{:fill => "#fff", :height => "14", :rx => "2", :width => "19.6", :y => ".5"}
+            %mask#a{:height => "15", :maskunits => "userSpaceOnUse", :style => "mask-type:luminance", :width => "20", :x => "0", :y => "0"}
+              %rect{:fill => "#fff", :height => "14", :rx => "2", :width => "19.6", :y => ".5"}
+            %g{:mask => "url(#a)"}
+              %path{:d => "M0 .5h19.6v14H0z", :fill => "#043CAE"}
+              %path{"clip-rule" => "evenodd", :d => "M9.14 3.493L9.8 3.3l.66.193-.193-.66.193-.66-.66.194-.66-.194.193.66-.193.66zm0 9.334l.66-.194.66.194-.193-.66.193-.66-.66.193-.66-.193.193.66-.193.66zm5.327-4.86l-.66.193L14 7.5l-.193-.66.66.193.66-.193-.194.66.194.66-.66-.193zm-9.994.193l.66-.193.66.193L5.6 7.5l.193-.66-.66.193-.66-.193.194.66-.194.66zm9.369-2.527l-.66.194.193-.66-.194-.66.66.193.66-.193-.193.66.193.66-.66-.194zm-8.743 4.86l.66-.193.66.193-.194-.66.194-.66-.66.194-.66-.194.193.66-.193.66zm7.034-6.568l-.66.193.194-.66-.194-.66.66.194.66-.193-.193.66.193.66-.66-.194zm-5.326 8.276l.66-.193.66.193-.194-.66.194-.66-.66.194-.66-.193.193.66-.193.66zM13.84 10.3l-.66.193.194-.66-.194-.66.66.194.66-.194-.193.66.193.66-.66-.193zM5.1 5.827l.66-.194.66.194-.194-.66.194-.66-.66.193-.66-.193.193.66-.193.66zm7.034 6.181l-.66.193.194-.66-.194-.66.66.194.66-.193-.193.66.193.66-.66-.194zm-5.326-7.89l.66-.193.66.193-.194-.66.194-.66-.66.194-.66-.193.193.66-.193.66z", :fill => "#FFD429", "fill-rule" => "evenodd"}
+          EUR
+    .mb-5
+      = f.submit "Ajouter", class: "btn-primary py-2.5", type: "submit"

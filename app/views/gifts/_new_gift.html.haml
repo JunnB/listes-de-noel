@@ -1,4 +1,0 @@
-= form_with(model: Gift.new, local: true, data: { turbo_frame: 'new_gift' }) do |form|
-  = form.text_field :description, placeholder: "Description du cadeau"
-  = form.collection_select :user_id, User.all, :id, :name, prompt: "Sélectionner une personne"
-  = form.submit "Ajouter Cadeau"

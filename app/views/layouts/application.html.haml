@@ -14,6 +14,7 @@
     = render 'shared/sidebar' if user_signed_in?
     - if user_signed_in?
       .menu-container
+        = render "shared/breadcrumb"
         = yield
     - else
       = yield

@@ -1,15 +1,29 @@
 class GiftsController < ApplicationController
-  before_action :set_users, only: [:index, :create]
   def index
+  end
+
+  def new
+    @gift = Gift.new
+    @pool = Pool.find(params[:pool_id])
+    add_breadcrumb "Evenements", pools_path
+    add_breadcrumb "Créer un nouveau cadeau"
+  end
+
+  def show
+    @gift = Gift.find(params[:id])
+    @pool = @gift.pool
+    add_breadcrumb "Evenements", pools_path
+    add_breadcrumb @pool.name, pool_path(@pool)
+    add_breadcrumb "Détails"
   end
 
   def create
     @gift = Gift.new(gift_params)
+    @gift.proposer = current_user
     if @gift.save
-      turbo_stream.append :gifts_list, partial: "gift", locals: { gift: @gift }
-      head :ok
+      redirect_to pool_path(@gift.pool)
     else
-      render :index
+      render :new
     end
   end
 
@@ -20,11 +34,6 @@ class GiftsController < ApplicationController
     head :ok
   end
 
-  def show
-    redirect_to user_sign_in_path unless current_user
-    @gifts = current_user.gifts
-  end
-
   private
 
   def set_users
@@ -32,6 +41,6 @@ class GiftsController < ApplicationController
   end
 
   def gift_params
-    params.require(:gift).permit(:description, :user_id)
+    params.require(:gift).permit(:name, :description, :user_id, :price, :pool_id)
   end
 end

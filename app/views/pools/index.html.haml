@@ -1,0 +1,28 @@
+%section.container
+  %h1.title.mt-3.mb-2 Les évenements
+  - if current_user.has_role?(:admin)
+    .grid.grid-cols-3.gap-4.mb-4
+      .flex.items-center.justify-center.h-24.rounded
+      .flex.items-center.justify-center.h-24.rounded
+      .flex.items-center.justify-center.h-24.rounded
+        = link_to "<b>+</b> Ajouter un évenement".html_safe, new_pool_path, class: "text-2xl btn-primary"
+  .relative.overflow-x-auto.shadow-md.sm:rounded-lg
+    .table.w-full.text-sm.text-left.rtl:text-right.text-gray-500.dark:text-gray-400
+      .w-full.table-header-group.text-xs.text-gray-700.uppercase.bg-gray-50.dark:bg-gray-700.dark:text-gray-400
+        .table-row
+          .table-cell.px-6.py-3{:scope => "col"}
+            Nom de l'évenement
+          .table-cell.px-6.py-3{:scope => "col"}
+            Personnes
+          .table-cell.px-6.py-3{:scope => "col"}
+            Participants
+          .table-cell.px-6.py-3{:scope => "col"}
+            Action
+          .table-cell.px-6.py-3{:scope => "col"}
+            Détail
+      .table-row-group
+        - @pools.each do |pool|
+          = render "pools/line", pool: pool
+              
+        
+

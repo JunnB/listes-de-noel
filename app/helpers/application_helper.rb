@@ -12,4 +12,22 @@ module ApplicationHelper
     end
     return color, svg_path
   end
+
+  def toogle_tag(options: {})
+    text = options[:text] || "Toggle"
+    label_class = "relative inline-flex items-center cursor-pointer"
+    input_class = "sr-only peer"
+    div_class = "w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+    span_class = "ms-3 text-sm font-medium text-gray-400 dark:text-gray-500"
+
+    html = <<~HTML
+      <label class="#{label_class}">
+        <input type="checkbox" value="" class="#{input_class}" #{options[:checked] ? "checked" : ""} #{options[:disabled] ? "disabled" : ""}>
+        <div class="#{div_class}"></div>
+        <span class="#{span_class}">#{text}</span>
+      </label>
+    HTML
+
+    puts html
+  end
 end

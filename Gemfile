@@ -83,3 +83,7 @@ gem "motor-admin", "~> 0.4.23"
 gem "tailwindcss-rails", "~> 2.0"
 gem "cssbundling-rails"
 gem "pg"
+
+gem "draper"
+
+gem "rolify"

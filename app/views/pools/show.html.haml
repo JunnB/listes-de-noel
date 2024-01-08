@@ -1,0 +1,54 @@
+%section.container
+  %h1.title.mt-3.mb-2
+    = "Evenement : #{@pool.name}"
+  
+  .grid.grid-cols-3.gap-4.mb-4
+    .flex.items-center.justify-center.h-24.rounded
+    .flex.items-center.justify-center.h-24.rounded
+    .flex.items-center.justify-center.h-24.rounded
+      = link_to "<b>+</b> Ajouter un cadeau".html_safe, new_gift_path(pool_id: @pool.id), class: "text-2xl btn-primary"
+  .relative.overflow-x-auto.shadow-md.sm:rounded-lg
+  .table.w-full.text-sm.text-left.rtl:text-right.text-gray-500.dark:text-gray-400
+    .table-header-group.text-xs.text-gray-700.uppercase.bg-gray-50.dark:bg-gray-700.dark:text-gray-400
+      .table-row
+        .table-cell.px-6.py-3
+          Cadeau
+        .table-cell.px-6.py-3
+          Pour
+        .table-cell.px-6.py-3
+          Participants
+        .table-cell.px-6.py-3
+          Responsable
+        .table-cell.px-6.py-3
+          Status
+        .table-cell.px-6.py-3
+          Détail
+        .table-cell.px-6.py-3
+          Action
+
+    .table-row-group
+      - @gifts.each do |g|
+        - gift = g.decorate
+        .table-row.odd:bg-white.odd:dark:bg-gray-900.even:bg-gray-50.even:dark:bg-gray-800.border-b.dark:border-gray-700
+          .table-cell.px-6.py-4.font-medium.text-gray-900.dark:text-white
+            = gift.name
+          .table-cell.px-6.py-4
+            = gift.recipient.name
+          .table-cell.px-6.py-4
+            = gift.formatted_participants
+          .table-cell.px-6.py-4
+            = gift.formatted_buyers
+          .table-cell.px-6.py-4
+            = gift.formatted_status
+          .table-cell.px-6.py-4
+            = link_to "Voir", gift_path(gift), class: "link"
+          .table-cell.px-6.py-4{"data-controller": "offer"}
+            - offer = gift.offers.where(user: current_user).first
+            
+            - if offer
+              = hidden_field_tag :offer, offer.comment, data: {"offer-target": "offer", id: offer.id, price: offer.price, status: offer.status, is_buyer: offer.is_buyer}
+              = button_tag "Modifier", class: "link", data: { "modal-target": "offer-form-modal", "gift-id": gift.id, "gift-name": gift.name, "gift-recipient-name": gift.recipient.name, action: "click->offer#openModal"}
+            - else
+              = button_tag "Modifier", class: "link", data: { "modal-target": "offer-form-modal", "gift-id": gift.id, "gift-name": gift.name, "gift-recipient-name": gift.recipient.name, action: "click->offer#openModal"}
+
+  = render "offers/modal_form"

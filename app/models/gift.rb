@@ -1,7 +1,9 @@
 class Gift < ApplicationRecord
   has_many :offers, dependent: :destroy
-  has_many :gift_responsibles, dependent: :destroy
-  has_many :buyers, through: :gift_responsibles, source: :user
-  belongs_to :user
-  enum status: { in_vote: "in_vote", paid: "paid", partial_payment: "partial_payment", gifted: "gifted" }
+  has_many :gift_buyers, dependent: :destroy
+  has_many :buyers, through: :gift_buyers, source: :user
+  belongs_to :proposer, class_name: "User"
+  belongs_to :recipient, class_name: "User"
+  belongs_to :pool
+  enum status: { available: "available", selected: "selected", paid: "paid", partially_paid: "partially_paid", gifted: "gifted" }
 end
